@@ -4,6 +4,16 @@ async function signup() {
   const username = document.getElementById("username").value;
   const name = document.getElementById("name").value;
 
+  if (email === "" || password === "" || username === "" || name === "") {
+    document.getElementById("error").classList.remove("hidden");
+    document.getElementById("error").innerHTML = "Please fill out all fields";
+    return;
+  }
+
+  const submitBtn = document.getElementById("submitBtn");
+
+  submitBtn.innerHTML = "Loading...";
+
   const response = await fetch(
     "https://coral-llama-coat.cyclic.app/api/auth/sign-up",
     {
@@ -20,6 +30,8 @@ async function signup() {
     }
   );
   const data = await response.json();
+
+  submitBtn.innerHTML = "Sign Up";
   if (data.success === false) {
     document.getElementById("error").classList.remove("hidden");
     document.getElementById("error").innerHTML = data.msg;
