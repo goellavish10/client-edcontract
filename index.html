@@ -15,8 +15,8 @@
         <img src="./img/Logo.png" alt="EdContracts Logo" />
       </div>
       <div class="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-2/3 lg:px-8 lg:py-24">
-        <div class="mx-auto max-w-lg text-center">
-          <h1 class="text-2xl font-bold sm:text-3xl">Login!</h1>
+        <div class="mx-auto max-w-md">
+          <h1 class="text-2xl font-bold sm:text-3xl">Login</h1>
 
           <p class="mt-4 text-gray-50 hidden text-red" id="error"></p>
         </div>
@@ -94,20 +94,29 @@
             </div>
           </div>
 
-          <div class="flex items-center justify-between">
-            <p class="text-sm text-gray-500">
-              New User?
-              <a href="/signup.html" class="underline">Sign Up</a>
-            </p>
-
+          <div class="flex items-center justify-between flex-col gap-5">
             <button
               type="button"
-              class="ml-3 inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
+              class="ml-3 inline-block rounded-2xl bg-blue-500 px-5 py-3 text-sm font-medium text-white w-full"
               onclick="login()"
               id="submitBtn"
             >
               Login
             </button>
+            <button
+              type="button"
+              class="ml-3 inline-block rounded-2xl bg-white px-5 py-3 text-sm font-medium text-[#0e76a8] w-full border-black border border-solid"
+            >
+              <span
+                ><img src="./img/LI-In-Bug.png" width="18" class="inline-block"
+              /></span>
+              Sign In with LinkedIn
+            </button>
+
+            <p class="text-sm text-gray-500">
+              Don't have an account yet?
+              <a href="/" class="underline">Sign up here</a>
+            </p>
           </div>
         </form>
       </div>
