@@ -13,7 +13,6 @@ async function login() {
 
   submitBtn.innerHTML = "Loading...";
 
-  console.log(email, password);
   const response = await fetch(
     "https://coral-llama-coat.cyclic.app/api/auth/login",
     {
@@ -28,6 +27,7 @@ async function login() {
     }
   );
   const data = await response.json();
+  console.log(data);
   submitBtn.innerHTML = "Login";
   if (data.success === false) {
     document.getElementById("error").classList.remove("hidden");
@@ -68,7 +68,7 @@ async function signup() {
     }
   );
   const data = await response.json();
-
+  console.log(data);
   submitBtn.innerHTML = "Sign Up";
   if (data.success === false) {
     document.getElementById("error").classList.remove("hidden");
@@ -80,6 +80,7 @@ async function signup() {
 }
 
 function changeState(state) {
+  document.getElementById("error").classList.remove("hidden");
   const currentStoredState = localStorage.getItem("state");
   const loginForm = document.getElementById("loginForm");
   const signupForm = document.getElementById("signUpForm");
