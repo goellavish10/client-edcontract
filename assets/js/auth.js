@@ -1,7 +1,7 @@
 localStorage.setItem("state", "login");
 async function login() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const email = document.getElementById("loginemail").value;
+  const password = document.getElementById("loginpassword").value;
 
   if (email === "" || password === "") {
     document.getElementById("error").classList.remove("hidden");
@@ -49,7 +49,7 @@ async function signup() {
     return;
   }
 
-  const submitBtn = document.getElementById("submitBtn");
+  const submitBtn = document.getElementById("signUpBtn");
 
   submitBtn.innerHTML = "Loading...";
 
@@ -76,7 +76,7 @@ async function signup() {
     return;
   }
 
-  window.location = "/login.html";
+  window.location = "/";
 }
 
 function changeState(state) {
