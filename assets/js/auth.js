@@ -38,6 +38,17 @@ async function login() {
   window.location = "/protectedRoute.html";
 }
 
+function recaptchaToken() {
+  grecaptcha.ready(function () {
+    grecaptcha
+      .execute("6LfNI2EiAAAAACOyFVYOfhRCwZ6-2CpZpP5uwzJg", { action: "submit" })
+      .then(function (token) {
+        console.log(token);
+        localStorage.setItem("token", token);
+      });
+  });
+}
+
 async function signup() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -49,6 +60,7 @@ async function signup() {
     return;
   }
 
+  recaptchaToken();
   const submitBtn = document.getElementById("signUpBtn");
 
   submitBtn.innerHTML = "Loading...";
@@ -63,7 +75,8 @@ async function signup() {
       body: JSON.stringify({
         email,
         password,
-        username
+        username,
+        token: localStorage.getItem("token")
       })
     }
   );
