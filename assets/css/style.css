@@ -1,0 +1,22 @@
+@font-face {
+  font-family: "Mont-Bold";
+  src: url("../fonts/Mont-Bold.ttf");
+  font-weight: bold;
+}
+@font-face {
+  font-family: "Mont-Normal";
+  src: url("../fonts/Mont-Regular.ttf");
+}
+@font-face {
+  font-family: "Mont-ExtraLight";
+  src: url("../fonts/Mont-ExtraLight.ttf");
+  font-weight: lighter;
+}
+
+* {
+  font-family: "Mont-Normal";
+}
+
+.brandline {
+  font-family: "Mont-Bold";
+}
