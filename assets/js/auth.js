@@ -1,4 +1,16 @@
+function recaptchaToken() {
+  grecaptcha.ready(function () {
+    grecaptcha
+      .execute("6LfNI2EiAAAAACOyFVYOfhRCwZ6-2CpZpP5uwzJg", { action: "submit" })
+      .then(function (token) {
+        console.log(token);
+        localStorage.setItem("token", token);
+      });
+  });
+}
+
 localStorage.setItem("state", "login");
+
 async function login() {
   const email = document.getElementById("loginemail").value;
   const password = document.getElementById("loginpassword").value;
@@ -9,6 +21,8 @@ async function login() {
     return;
   }
 
+  recaptchaToken();
+
   const submitBtn = document.getElementById("submitBtn");
 
   submitBtn.innerHTML = "Loading...";
@@ -18,7 +32,8 @@ async function login() {
     {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        captcha: localStorage.getItem("token")
       },
       body: JSON.stringify({
         email,
@@ -36,17 +51,6 @@ async function login() {
   }
 
   window.location = "/protectedRoute.html";
-}
-
-function recaptchaToken() {
-  grecaptcha.ready(function () {
-    grecaptcha
-      .execute("6LfNI2EiAAAAACOyFVYOfhRCwZ6-2CpZpP5uwzJg", { action: "submit" })
-      .then(function (token) {
-        console.log(token);
-        localStorage.setItem("token", token);
-      });
-  });
 }
 
 async function signup() {
@@ -70,13 +74,13 @@ async function signup() {
     {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        captcha: localStorage.getItem("token")
       },
       body: JSON.stringify({
         email,
         password,
-        username,
-        token: localStorage.getItem("token")
+        username
       })
     }
   );
@@ -103,13 +107,15 @@ function changeState(state) {
     localStorage.setItem("state", "signup");
     loginForm.classList.add("hidden");
     signupForm.classList.remove("hidden");
-    formHeading.innerHTML = "Sign Up";
+    formHeading.innerHTML = "Welcome to EdContracts";
+    document.getElementById("signUpSubheading").classList.remove("hidden");
     return;
   } else if (state === "signup") {
     localStorage.setItem("state", "login");
     signupForm.classList.add("hidden");
     loginForm.classList.remove("hidden");
     formHeading.innerHTML = "Login";
+    document.getElementById("signUpSubheading").classList.add("hidden");
     return;
   }
 }
