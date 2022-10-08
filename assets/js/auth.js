@@ -80,7 +80,8 @@ async function signup() {
       body: JSON.stringify({
         email,
         password,
-        username
+        username,
+        checkbox: getCheckBoxValue()
       })
     }
   );
@@ -93,7 +94,7 @@ async function signup() {
     return;
   }
 
-  window.location = "/";
+  window.location = `/${data.redirectPage}.html`;
 }
 
 function changeState(state) {
@@ -117,5 +118,14 @@ function changeState(state) {
     formHeading.innerHTML = "Login";
     document.getElementById("signUpSubheading").classList.add("hidden");
     return;
+  }
+}
+
+function getCheckBoxValue() {
+  const radioButtons = document.getElementsByName("default-radio");
+  for (let i = 0; i < radioButtons.length; i++) {
+    if (radioButtons[i].checked) {
+      return radioButtons[i].value;
+    }
   }
 }
