@@ -69,22 +69,19 @@ async function signup() {
 
   submitBtn.innerHTML = "Loading...";
 
-  const response = await fetch(
-    "https://coral-llama-coat.cyclic.app/api/auth/sign-up",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        captcha: localStorage.getItem("token")
-      },
-      body: JSON.stringify({
-        email,
-        password,
-        username,
-        checkbox: getCheckBoxValue()
-      })
-    }
-  );
+  const response = await fetch("http://localhost:8000/api/auth/sign-up", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      captcha: localStorage.getItem("token")
+    },
+    body: JSON.stringify({
+      email,
+      password,
+      username,
+      checkbox: getCheckBoxValue()
+    })
+  });
   const data = await response.json();
   console.log(data);
   submitBtn.innerHTML = "Sign Up";
@@ -125,6 +122,7 @@ function getCheckBoxValue() {
   const radioButtons = document.getElementsByName("default-radio");
   for (let i = 0; i < radioButtons.length; i++) {
     if (radioButtons[i].checked) {
+      console.log(radioButtons[i].value);
       return radioButtons[i].value;
     }
   }
