@@ -64,6 +64,15 @@ async function signup() {
     return;
   }
 
+  const validRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+  if (!email.match(validRegex)) {
+    document.getElementById("error").classList.remove("hidden");
+    document.getElementById("error").innerHTML = "Please enter a valid email";
+    return;
+  }
+
   recaptchaToken();
   const submitBtn = document.getElementById("signUpBtn");
 
