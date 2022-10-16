@@ -26,6 +26,10 @@ function addNewCourse(el) {
   );
 
   renderNewCourse(courseObj, courseList.length);
+
+  document.getElementById("dropdownBottom").classList.remove("block");
+  document.getElementById("dropdownBottom").classList.add("hidden");
+  document.getElementById("dropdownBottomButton").click();
 }
 
 function renderNewCourse(courseObj, length) {

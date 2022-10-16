@@ -35,18 +35,18 @@
       <div
         class="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-2/3 lg:px-8 lg:py-24 lg:h-screen overflow-auto flex justify-center items-center"
       >
-        <div class="mx-auto max-w-md">
+        <div class="mx-auto">
           <h1 class="text-2xl font-bold sm:text-3xl" id="formHeading">
-            Additional information
+            Please provide the following information
           </h1>
-          <div class="flex flex-row items-center py-5">
+          <div class="flex flex-col py-5 gap-5">
             <h3 class="text-lg">Country:</h3>
 
-            <div class="flex justify-center w-1/2">
+            <div class="flex w-full">
               <button
                 id="dropdownBottomButton"
                 data-dropdown-toggle="dropdownBottom"
-                class="text-white bg-[#E8533B] hover:bg-[#C43F2E] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+                class="bg-white hover:bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center border border-black text-black w-1/2 flex justify-between"
                 type="button"
               >
                 Select Country
@@ -69,7 +69,7 @@
               <!-- Dropdown menu -->
               <div
                 id="dropdownBottom"
-                class="hidden z-10 w-80 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
+                class="hidden z-10 w-80 bg-white rounded divide-y divide-gray-100 shadow border border-black w-1/2"
               >
                 <ul
                   class="py-1 text-sm text-gray-700 dark:text-gray-200 overflow-y-auto h-48"
@@ -79,8 +79,8 @@
               </div>
             </div>
           </div>
-          <div class="flex flex-col gap-5 items-left py-5">
-            <p class="text-lg">What is your current occupation?</p>
+          <div class="flex flex-row gap-5 items-center py-5 mt-10">
+            <p class="text-lg">What is your current occupation:</p>
             <div class="flex flex-row gap-5">
               <div class="flex items-center mb-4 mt-4">
                 <input
@@ -115,7 +115,16 @@
               </div>
             </div>
           </div>
-          <div class="flex justify-center mt-8 hidden" id="occupationBtn"></div>
+          <div class="flex justify-center mt-8" id="occupationBtn">
+            <button
+              type="button"
+              class="ml-3 inline-block rounded-2xl bg-[#E8533B] px-5 py-3 text-sm font-medium text-white w-1/2 text-white"
+              onclick="submitOccupation(this)"
+              id="submitOccupationBtn"
+            >
+              Create Account
+            </button>
+          </div>
           <p class="mt-4 text-gray-50 hidden text-red-500" id="error"></p>
         </div>
       </div>

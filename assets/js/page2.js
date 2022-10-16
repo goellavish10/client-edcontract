@@ -260,7 +260,7 @@ function renderCountries() {
       href="#"
       onclick="selectCountry(this)"
       id="${key}"
-      class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+      class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-black"
       >${countryList[key]}</a
     >
   </li>
@@ -290,27 +290,10 @@ function selectCountry(element) {
     ></path>
   </svg>
   `;
-}
 
-function selectOccupation(el) {
-  const occupationBtn = document.getElementById("occupationBtn");
-
-  const occupationSelected = el.value;
-
-  if (occupationBtn.classList.contains("hidden")) {
-    occupationBtn.classList.remove("hidden");
-  }
-
-  localStorage.setItem("occupation", occupationSelected);
-
-  occupationBtn.innerHTML = `
-    <button
-    type="button"
-    class="ml-3 inline-block rounded-2xl bg-[#E8533B] px-5 py-3 text-sm font-medium text-white w-1/2 text-white"
-    onclick="submitOccupation(this)"
-    id="submitOccupationBtn"
-  >Select ${occupationSelected}</button>
-    `;
+  document.getElementById("dropdownBottom").classList.remove("block");
+  document.getElementById("dropdownBottom").classList.add("hidden");
+  document.getElementById("dropdownBottomButton").click();
 }
 
 function submitOccupation(el) {
