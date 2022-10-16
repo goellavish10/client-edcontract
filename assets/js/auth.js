@@ -78,27 +78,37 @@ async function signup() {
 
   submitBtn.innerHTML = "Loading...";
 
-  const response = await fetch(
-    "https://coral-llama-coat.cyclic.app/api/auth/sign-up",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        captcha: localStorage.getItem("token")
-      },
-      body: JSON.stringify({
-        email,
-        password,
-        username,
-        checkbox: getCheckBoxValue()
-      })
-    }
-  );
+  const response = await fetch("http://localhost:8000/api/auth/sign-up", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      captcha: localStorage.getItem("token")
+    },
+    body: JSON.stringify({
+      email,
+      password,
+      username,
+      checkbox: getCheckBoxValue()
+    })
+  });
   const data = await response.json();
   console.log(data);
   submitBtn.innerHTML = "Sign Up";
   if (data.success === false) {
+    if (Array.isArray(data.msg)) {
+      console.log(data);
+      document.getElementById("error").classList.remove("hidden");
+      document.getElementById("error").innerHTML = "";
+      for (let i = 0; i < data.msg.length; i++) {
+        document.getElementById("error").innerHTML += `
+        <p>${data.msg[i].message.replace("string", "password")}</p>
+        <br />
+      `;
+      }
+      return;
+    }
     document.getElementById("error").classList.remove("hidden");
+    document.getElementById("error").innerHTML = "";
     document.getElementById("error").innerHTML = data.msg;
     return;
   }
