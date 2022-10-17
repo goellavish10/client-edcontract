@@ -321,7 +321,7 @@ function renderSchools() {
         href="#"
         onclick="selectSchool(this)"
         id="${school.split(" ")[0]}"
-        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+        class="block py-2 px-4"
         >${school}</a
       >
     </li>
