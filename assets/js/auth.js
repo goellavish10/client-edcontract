@@ -152,3 +152,7 @@ function getCheckBoxValue() {
     }
   }
 }
+
+function redirectHome() {
+  window.location = "/";
+}

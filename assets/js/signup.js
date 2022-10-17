@@ -40,3 +40,7 @@ async function signup() {
 
   window.location = "/login.html";
 }
+
+function redirectHome() {
+  window.location = "/";
+}

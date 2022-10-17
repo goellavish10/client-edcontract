@@ -36,3 +36,7 @@ async function login() {
 
   window.location = "/protectedRoute.html";
 }
+
+function redirectHome() {
+  window.location = "/";
+}

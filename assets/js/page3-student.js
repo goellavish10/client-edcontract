@@ -583,3 +583,7 @@ function selectSchool(element) {
   document.getElementById("dropdownBottom").classList.add("hidden");
   document.getElementById("dropdownBottomButtonSchools").click();
 }
+
+function redirectHome() {
+  window.location = "/";
+}

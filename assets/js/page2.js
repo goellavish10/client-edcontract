@@ -305,3 +305,6 @@ function submitOccupation(el) {
     window.location = "/page3-professional.html";
   }
 }
+function redirectHome() {
+  window.location = "/";
+}

@@ -123,3 +123,7 @@ function createAccount() {
   const selectedCoursesDiv = document.getElementById("coursesSelected");
   selectedCoursesDiv.innerHTML = "API integration pending";
 }
+
+function redirectHome() {
+  window.location = "/";
+}
