@@ -72,6 +72,9 @@ function renderNewCourse(courseObj, length) {
     `;
 
   const selectedCoursesDiv = document.getElementById("coursesSelected");
+  if (selectedCoursesDiv.classList.contains("text-red")) {
+    selectedCoursesDiv.classList.remove("text-red");
+  }
   if (length === 0) {
     selectedCoursesDiv.innerHTML = "";
   }
@@ -106,4 +109,17 @@ function submitAccessToken() {
   document.getElementById("accessToken").value = "";
   accessTokenBtn.innerHTML = "Submit";
   accessTokenBtn.disabled = false;
+}
+
+function createAccount() {
+  console.log(sessionStorage.getItem("courseList"));
+  if (JSON.parse(sessionStorage.getItem("courseList")).length === 0) {
+    const selectedCoursesDiv = document.getElementById("coursesSelected");
+    selectedCoursesDiv.classList.add("text-red-500");
+    selectedCoursesDiv.innerHTML = "Please select atleast one course";
+    return;
+  }
+
+  const selectedCoursesDiv = document.getElementById("coursesSelected");
+  selectedCoursesDiv.innerHTML = "API integration pending";
 }

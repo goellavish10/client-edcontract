@@ -482,9 +482,9 @@ function addNewCourse(el) {
 
   renderNewCourse(courseObj, courseList.length);
 
-  document.getElementById("dropdownBottom").classList.remove("block");
-  document.getElementById("dropdownBottom").classList.add("hidden");
-  document.getElementById("dropdownBottomButton").click();
+  document.getElementById("dropdownBottomCourses").classList.remove("block");
+  document.getElementById("dropdownBottomCourses").classList.add("hidden");
+  document.getElementById("dropdownBottomButtonCourses").click();
 }
 
 function renderNewCourse(courseObj, length) {
@@ -544,4 +544,42 @@ function deleteCourse(courseId) {
 
   const courseDiv = document.getElementById(courseId + "__");
   courseDiv.remove();
+}
+
+function submitOccupation() {
+  if (JSON.parse(sessionStorage.getItem("courseList")).length === 0) {
+    const selectedCoursesDiv = document.getElementById("coursesSelected");
+    selectedCoursesDiv.classList.add("text-red-500");
+    selectedCoursesDiv.innerHTML = "Please select atleast one course";
+    return;
+  }
+
+  const selectedCoursesDiv = document.getElementById("coursesSelected");
+  selectedCoursesDiv.innerHTML = "API integration pending";
+}
+
+function selectSchool(element) {
+  localStorage.setItem("school", element.innerHTML);
+  document.getElementById("dropdownBottomButtonSchools").innerHTML = `
+  ${element.innerHTML}
+  <svg
+    class="ml-2 w-4 h-4"
+    aria-hidden="true"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M19 9l-7 7-7-7"
+    ></path>
+  </svg>
+  `;
+
+  document.getElementById("dropdownBottom").classList.remove("block");
+  document.getElementById("dropdownBottom").classList.add("hidden");
+  document.getElementById("dropdownBottomButtonSchools").click();
 }
