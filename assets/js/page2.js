@@ -1,3 +1,5 @@
+localStorage.setItem("country", "");
+localStorage.setItem("occupation", "");
 const countryList = {
   AF: "Afghanistan",
   AL: "Albania",
@@ -296,15 +298,86 @@ function selectCountry(element) {
   document.getElementById("dropdownBottomButton").click();
 }
 
-function submitOccupation(el) {
-  const selectedOccupation = localStorage.getItem("occupation");
-  const country = localStorage.getItem("country");
-  if (selectedOccupation === "Student") {
-    window.location = "/page3-student.html";
-  } else if (selectedOccupation === "Professional") {
-    window.location = "/page3-professional.html";
-  }
-}
 function redirectHome() {
   window.location = "/";
+}
+
+window.onload = function () {
+  checkAuth();
+  renderCountries();
+};
+
+async function checkAuth() {
+  // make a get request to localhost 8000 /api/auth/check/page1 to check if the useer is authorized
+  // if not authorized redirect to home page
+  const response = await fetch(
+    "https://coral-llama-coat.cyclic.app/api/auth/check/page2",
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token")
+      },
+      credentials: "include"
+    }
+  );
+  const data = await response.json();
+  if (data.success === false && data.redirect === true) {
+    window.location = `/${data.msg}.html`;
+  } else if (data.success === false) {
+    window.location = "/";
+  }
+
+  return;
+}
+
+function selectOccupation(el) {
+  localStorage.setItem("occupation", el.value);
+}
+
+async function submitData(el) {
+  const country = localStorage.getItem("country");
+  const currentOccupation = localStorage.getItem("occupation");
+
+  if (
+    country === null ||
+    currentOccupation === null ||
+    country === "" ||
+    currentOccupation === ""
+  ) {
+    alert("Please select all the fields");
+    return;
+  }
+
+  el.innerHTML = "Loading...";
+
+  const dataObj = {
+    country,
+    currentOccupation
+  };
+
+  const response = await fetch(
+    "https://coral-llama-coat.cyclic.app/api/registration/page2",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+        pagecode: "PG002_BA"
+      },
+      body: JSON.stringify(dataObj)
+    }
+  );
+  const data = await response.json();
+
+  if (data.success === false) {
+    alert(data.msg);
+    return;
+  }
+
+  if (data.success === true) {
+    window.location = `/${data.redirect}.html`;
+  }
+
+  return;
 }

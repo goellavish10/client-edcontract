@@ -127,3 +127,24 @@ function createAccount() {
 function redirectHome() {
   window.location = "/";
 }
+
+async function checkAuth() {
+  // make a get request to localhost 8000 /api/auth/check/page1 to check if the useer is authorized
+  // if not authorized redirect to home page
+  const response = await fetch("http://localhost:8000/api/auth/check/page1", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    credentials: "include"
+  });
+  const data = await response.json();
+  if (data.success === false && data.redirect === true) {
+    window.location = `/${data.msg}.html`;
+  } else if (data.success === false) {
+    window.location = "/";
+  }
+
+  return;
+}
