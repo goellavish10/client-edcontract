@@ -79,6 +79,7 @@ onclick="redirectHome()"
                   placeholder="Enter your access token"
                   id="accessToken"
                   name="accessToken"
+                  onkeyup="submitAccessToken()"
                 />
               </div>
               
@@ -105,8 +106,8 @@ onclick="redirectHome()"
                   type="text"
                   class="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm text-[#737579]"
                   placeholder="Enter your school email"
-                  id="accessToken"
-                  name="accessToken"
+                  id="instituteEmail"
+                  name="instituteEmail"
                 />
               </div>
               
@@ -149,43 +150,9 @@ onclick="redirectHome()"
                 <ul
                   class="py-1 text-sm text-gray-700 text-black overflow-y-auto h-28"
                   aria-labelledby="dropdownBottomButton"
+                  id="courseListElement"
                 >
-                  <li>
-                    <a
-                      href="#"
-                      onclick="addNewCourse(this)"
-                      id="course1"
-                      class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Course 1</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      onclick="addNewCourse(this)"
-                      id="course2"
-                      class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Course 2</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      onclick="addNewCourse(this)"
-                      id="course3"
-                      class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Course 3</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      onclick="addNewCourse(this)"
-                      id="course4"
-                      class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Course 4</a
-                    >
-                  </li>
+                  Please enter your access token
                 </ul>
               </div>
             </div>
@@ -197,7 +164,7 @@ onclick="redirectHome()"
             <button
               type="button"
               class="ml-3 inline-block rounded-2xl bg-[#E8533B] px-5 py-3 text-sm font-medium text-white w-1/2 text-white"
-              onclick="createAccount()"
+              onclick="createAccount(this)"
               id="createAccountBtn"
             >
               Create Account

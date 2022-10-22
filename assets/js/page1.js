@@ -6,7 +6,7 @@ function addNewCourse(el) {
 
   const courseObj = {
     courseName: el.innerHTML,
-    courseID: el.id
+    courseId: el.dataset.courseid
   };
 
   const courseList = JSON.parse(sessionStorage.getItem("courseList"));
@@ -17,6 +17,11 @@ function addNewCourse(el) {
 
   if (isPresent) {
     alert("Course Already added");
+    return;
+  }
+
+  if (courseList.length === 4) {
+    alert("Maximum 4 courses can be selected");
     return;
   }
 
@@ -94,36 +99,6 @@ function deleteCourse(courseId) {
   courseDiv.remove();
 }
 
-function submitAccessToken() {
-  let accessToken = document.getElementById("accessToken").value;
-  if (accessToken === "") {
-    alert("Please enter access token");
-    return;
-  }
-
-  const accessTokenBtn = document.getElementById("accessTokenBtn");
-  accessTokenBtn.innerHTML = "Loading...";
-  accessTokenBtn.disabled = true;
-
-  alert("DEMO SUBMSISSION");
-  document.getElementById("accessToken").value = "";
-  accessTokenBtn.innerHTML = "Submit";
-  accessTokenBtn.disabled = false;
-}
-
-function createAccount() {
-  console.log(sessionStorage.getItem("courseList"));
-  if (JSON.parse(sessionStorage.getItem("courseList")).length === 0) {
-    const selectedCoursesDiv = document.getElementById("coursesSelected");
-    selectedCoursesDiv.classList.add("text-red-500");
-    selectedCoursesDiv.innerHTML = "Please select atleast one course";
-    return;
-  }
-
-  const selectedCoursesDiv = document.getElementById("coursesSelected");
-  selectedCoursesDiv.innerHTML = "API integration pending";
-}
-
 function redirectHome() {
   window.location = "/";
 }
@@ -147,4 +122,103 @@ async function checkAuth() {
   }
 
   return;
+}
+
+async function submitAccessToken() {
+  const accessToken = document.getElementById("accessToken").value;
+
+  const response = await fetch(
+    "http://localhost:8000/api/registration/canvas-token",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+        pagecode: "PG001_AB"
+      },
+      body: JSON.stringify({ accessToken })
+    }
+  );
+
+  const data = await response.json();
+
+  console.log(data);
+
+  renderCourses(data);
+}
+
+async function renderCourses(dataArr) {
+  const courseListElement = document.getElementById("courseListElement");
+  console.log("EXECUTION STARTS");
+  courseListElement.innerHTML = "";
+  dataArr.forEach((element, index) => {
+    let html = `
+    <li>
+    <a
+      href="#"
+      onclick="addNewCourse(this)"
+      id="course${index}"
+      class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+      data-courseid="${element.id}"
+      >${element.name}</a
+    >
+  </li>
+    `;
+
+    courseListElement.innerHTML += html;
+  });
+}
+
+async function createAccount(element) {
+  const courseList = JSON.parse(sessionStorage.getItem("courseList"));
+  if (courseList.length === 0) {
+    alert("Please select atleast one course");
+    return;
+  }
+
+  const instituteEmail = document.getElementById("instituteEmail");
+  const courses = courseList;
+
+  if (instituteEmail.value === "") {
+    alert("Please enter your institute email");
+    return;
+  }
+
+  const dataObj = {
+    instituteEmail: instituteEmail.value,
+    courses
+  };
+
+  element.innerHTML = "Loading...";
+
+  const response = await fetch("http://localhost:8000/api/registration/page1", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("token"),
+      pagecode: "PG001_AB"
+    },
+    body: JSON.stringify(dataObj)
+  });
+
+  const data = await response.json();
+  element.innerHTML = "Create Account";
+  if (data.success === false && data.redirect === true) {
+    window.location = `/${data.msg}.html`;
+  } else if (data.success === false && data.msg === "Unauthorized") {
+    localStorage.clear();
+    window.location = "/";
+  } else if (data.success === false) {
+    alert(data.msg);
+    return;
+  }
+
+  if (data.accessToken === null || data.accessToken === undefined) {
+    window.location.reload();
+  }
+
+  localStorage.setItem("token", "Bearer " + data.accessToken);
+  console.log(data.accessToken);
+  alert("wait here");
+  window.location = `${data.redirectUrl}.html`;
 }
