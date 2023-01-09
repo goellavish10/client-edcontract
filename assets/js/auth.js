@@ -121,6 +121,73 @@ async function signup() {
   window.location = `/${data.redirectPage}.html`;
 }
 
+async function moodleLogin() {
+  const instituteLink = document.getElementById("loginInstituteLink").value;
+  const email = document.getElementById("loginMoodleEmail").value;
+  const password = document.getElementById("loginMoodlePassword").value;
+
+  if (email === "" || password === "" || instituteLink === "") {
+    document.getElementById("error").classList.remove("hidden");
+    document.getElementById("error").innerHTML = "Please fill out all fields";
+    return;
+  }
+
+  recaptchaToken();
+
+  const submitBtn = document.getElementById("MoodleSubmitBtn");
+
+  submitBtn.innerHTML = "Loading...";
+
+  const response = await fetch(
+    "https://coral-llama-coat.cyclic.app/api/auth/moodleLogin",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        captcha: localStorage.getItem("token")
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        instituteLink
+      })
+    }
+  );
+  const data = await response.json();
+  console.log(data);
+  submitBtn.innerHTML = "Login";
+  if (data.success === false) {
+    document.getElementById("error").classList.remove("hidden");
+    document.getElementById("error").innerHTML = data.msg;
+    return;
+  }
+
+  window.location = "/moodle.html";
+}
+
+async function checkLogin() {
+  const response = await fetch("https://coral-llama-coat.cyclic.app/api/auth/checkLogin", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      captcha: localStorage.getItem("token")
+    },
+    body: JSON.stringify({
+      token: localStorage.getItem("token")
+    })
+  })
+  const data = await response.json();
+  console.log(data);
+  if (data.success === true) {
+    if (data.login === "moodle") {
+      window.location = "/moodleLogin.html";
+    } else {
+      window.location = "/index.html"
+    }
+  }
+
+}
+
 function changeState(state) {
   document.getElementById("error").classList.remove("hidden");
   const currentStoredState = localStorage.getItem("state");

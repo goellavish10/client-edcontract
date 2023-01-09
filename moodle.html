@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EdContracts</title>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/img/favicon.png"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <section class="relative flex flex-wrap lg:h-screen lg:items-center">
+      <div
+        class="relative h-full w-full sm:h-96 lg:h-full lg:w-1/3 bg-[#E8533B] py-10 px-5 flex flex-col justify-between"
+      >
+        <img
+          src="./assets/img/Logo.png"
+          alt="EdContracts Logo"
+          width="200"
+          class="block"
+          onclick="redirectHome()"
+        />
+        <div class="px-5 text-black text-5xl brandline">
+          <span class="text-white brandline">Bringing</span><br />
+          learn-to-earn <br /><span class="text-white brandline">to the</span>
+          real world
+        </div>
+      </div>
+      <div
+        class="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-2/3 lg:px-8 lg:py-24 lg:h-screen overflow-auto"
+      >
+        <div class="mx-auto max-w-md">
+          <h1 class="text-2xl font-bold sm:text-3xl" id="formHeading">
+            Additional information
+          </h1>
+          <p class="block text-gray-900 text-xl font-bold mt-5  mb-2">
+            Courses Selected
+          </p>
+          <div class="flex flex-row gap-5 w-full py-5">
+            <div class="flex w-full">
+              <button
+                id="dropdownBottomButton"
+                data-dropdown-toggle="dropdownBottom"
+                class="text-black bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex flex justify-between justify-center border border-black w-1/2"
+                type="button"
+              >
+                Select Courses
+                <svg
+                  class="ml-2 w-4 h-4"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </button>
+              <!-- Dropdown menu -->
+              <div
+                id="dropdownBottom"
+                class="hidden z-10 w-60 bg-white rounded divide-y divide-gray-100 shadow border border-black"
+              >
+                <ul
+                  class="py-1 text-sm text-gray-700 text-black overflow-y-auto h-28"
+                  aria-labelledby="dropdownBottomButton"
+                  id="courseListElement"
+                >
+                  Please enter your access token
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-row gap-5 w-full py-3">
+            <div id="coursesSelected"></div>
+          </div>
+
+          <div class="flex flex-col gap-5">
+            <h3 class="text-lg">Your school:</h3>
+
+            <div class="flex w-full">
+              <button
+                id="dropdownBottomButtonSchool"
+                data-dropdown-toggle="dropdownBottomSchool"
+                class="bg-white hover:bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center border border-black text-black w-1/2 flex justify-between"
+                type="button"
+              >
+                Select School
+                <svg
+                  class="ml-2 w-4 h-4"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </button>
+              <!-- Dropdown menu -->
+              <div
+                id="dropdownBottomSchool"
+                class="hidden z-10 w-80 bg-white rounded divide-y divide-gray-100 shadow border border-black w-1/2"
+              >
+                <ul
+                  class="py-1 text-sm text-gray-700 dark:text-gray-200 overflow-y-auto h-48"
+                  aria-labelledby="dropdownBottomButtonSchool"
+                  id="allSchoolDropdownList"
+                ></ul>
+              </div>
+            </div>
+          </div>
+          <div class="hidden w-full mt-5" id="otherSchoolInput">
+            <label
+              for="otherSchool"
+              class="block text-gray-700 text-xl font-bold mb-2"
+              >Enter Your School</label
+            >
+            <div class="relative">
+              <input
+                type="text"
+                class="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm text-[#737579]"
+                placeholder="Enter your School Name"
+                id="otherSchool"
+                name="otherSchool"
+                onkeyup="saveSchoolName()"
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-5 pt-5">
+            <h3 class="text-lg">What is your school year?</h3>
+
+            <div class="flex w-full">
+              <button
+                id="dropdownBottomButtonSchoolYear"
+                data-dropdown-toggle="dropdownBottomSchoolYear"
+                class="bg-white hover:bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center border border-black text-black w-1/2 flex justify-between"
+                type="button"
+              >
+                Select School Year
+                <svg
+                  class="ml-2 w-4 h-4"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </button>
+              <!-- Dropdown menu -->
+              <div
+                id="dropdownBottomSchoolYear"
+                class="hidden z-10 w-80 bg-white rounded divide-y divide-gray-100 shadow border border-black w-1/2"
+              >
+                <ul
+                  class="py-1 text-sm text-gray-700 dark:text-gray-200 overflow-y-auto h-48"
+                  aria-labelledby="dropdownBottomButtonSchoolYear"
+                  id="allSchoolYearDropdownList"
+                ></ul>
+              </div>
+            </div>
+          </div>
+          <div class="hidden w-full mt-5" id="otherSchoolYearInput">
+            <label
+              for="otherSchoolYear"
+              class="block text-gray-700 text-xl font-bold mb-2"
+              >Enter Your School Year</label
+            >
+            <div class="relative">
+              <input
+                type="text"
+                class="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm text-[#737579]"
+                placeholder="Enter your School Name"
+                id="otherSchoolYear"
+                name="otherSchoolYear"
+                onkeyup="saveSchoolYear()"
+              />
+            </div>
+          </div>
+          <div class="flex justify-center mt-8">
+            <button
+              type="button"
+              class="ml-3 inline-block rounded-2xl bg-[#E8533B] px-5 py-3 text-sm font-medium text-white w-1/2 text-white"
+              onclick="createAccount(this)"
+              id="createAccountBtn"
+            >
+              Create Account
+            </button>
+          </div>
+          <p class="mt-4 text-gray-50 hidden text-red-500" id="error"></p>
+        </ddiv>
+      </div>
+    </section>
+
+    <script src="./assets/js/page1.js"></script>
+  </body>
+</html>

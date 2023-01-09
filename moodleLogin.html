@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EdContracts</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon.png" />
+    <script src="./assets/js/script.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfNI2EiAAAAACOyFVYOfhRCwZ6-2CpZpP5uwzJg"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+
+<body onload="checkLogin()">
+    <section class="relative flex flex-wrap lg:h-screen lg:items-center">
+        <div
+            class="relative h-full w-full sm:h-96 lg:h-full lg:w-1/3 bg-[#E8533B] py-10 px-5 flex flex-col justify-between">
+            <img src="./assets/img/Logo.png" alt="EdContracts Logo" width="200" class="block cursor-pointer"
+                onclick="redirectHome()" />
+            <div class="px-5 text-black text-5xl brandline">
+                <span class="text-white brandline">Bringing</span><br />
+                learn-to-earn <br /><span class="text-white brandline">to the</span>
+                real world
+            </div>
+        </div>
+        <div class="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-2/3 lg:px-8 lg:py-24 lg:h-screen overflow-auto">
+            <div class="mx-auto max-w-md">
+                <h1 class="text-2xl font-bold sm:text-3xl" id="formHeading">Login with Moodle Credentials</h1>
+                <p class="mt-4 text-gray-50 hidden text-gray-500" id="signUpSubheading">
+                    Please provide the following information
+                </p>
+                <p class="mt-4 text-gray-50 hidden text-red-500" id="error"></p>
+            </div>
+
+            <form class="mx-auto mt-8 mb-0 max-w-md space-y-4" id="loginForm">
+                <div>
+                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                    <div class="relative">
+                        <input type="email"
+                            class="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm text-[#737579]"
+                            placeholder="Enter email" id="loginMoodleEmail" />
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <div class="relative">
+                        <input type="password"
+                            class="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm text-[#737579]"
+                            placeholder="Enter password" id="loginMoodlePassword" />
+                    </div>
+                </div>
+                <div>
+                    <label for="institutelink" class="block text-gray-700 text-sm font-bold mb-2">Institute Link</label>
+                    <div class="relative">
+                        <input type="text"
+                            class="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm text-[#737579]"
+                            placeholder="Enter Institute Link" id="loginInstituteLink" />
+                    </div>
+                </div>
+                <div class="flex items-center justify-between flex-col gap-5">
+                    <button type="button"
+                        class="ml-3 inline-block rounded-2xl bg-[#E8533B] px-5 py-3 text-sm font-medium text-white w-full"
+                        onclick="moodleLogin()" id="MoodleSubmitBtn">
+                        Login
+                    </button>
+                    <!-- <button type="button"
+                        class="ml-3 inline-block rounded-2xl bg-white px-5 py-3 text-sm font-medium text-[#C43F2E] w-full border-black border border-solid">
+                        <span><img src="./assets/img/image.png" width="18" class="inline-block" /></span>
+                        Sign in with Canvas LMS
+                    </button> -->
+
+                    <p class="text-sm text-gray-500">
+                        Don't have an account yet?
+                        <a href="/" class="underline">Login without Moodle</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </section>
+    <script src="./assets/js/auth.js"></script>
+    <script>
+        function onSubmit(token) {
+            console.log(token);
+        }
+    </script>
+</body>
+
+</html>
