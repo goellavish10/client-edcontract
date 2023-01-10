@@ -3,8 +3,8 @@ function recaptchaToken() {
     grecaptcha
       .execute("6LfNI2EiAAAAACOyFVYOfhRCwZ6-2CpZpP5uwzJg", { action: "submit" })
       .then(function (token) {
-        console.log(token);
-        localStorage.setItem("token", token);
+        // console.log(token);
+        localStorage.setItem("captchaToken", token);
       });
   });
 }
@@ -28,12 +28,13 @@ async function login() {
   submitBtn.innerHTML = "Loading...";
 
   const response = await fetch(
-    "https://coral-llama-coat.cyclic.app/api/auth/login",
+    // "https://coral-llama-coat.cyclic.app/api/auth/login",
+    "http://localhost:8000/api/auth/login",
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        captcha: localStorage.getItem("token")
+        captcha: localStorage.getItem("captchaToken")
       },
       body: JSON.stringify({
         email,
@@ -79,12 +80,13 @@ async function signup() {
   submitBtn.innerHTML = "Loading...";
 
   const response = await fetch(
-    "https://coral-llama-coat.cyclic.app/api/auth/sign-up",
+    // "https://coral-llama-coat.cyclic.app/api/auth/sign-up",
+    "http://localhost:8000/api/auth/sign-up",
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        captcha: localStorage.getItem("token")
+        captcha: localStorage.getItem("captchaToken")
       },
       body: JSON.stringify({
         email,
@@ -123,10 +125,10 @@ async function signup() {
 
 async function moodleLogin() {
   const instituteLink = document.getElementById("loginInstituteLink").value;
-  const email = document.getElementById("loginMoodleEmail").value;
+  const username = document.getElementById("loginMoodleUsername").value;
   const password = document.getElementById("loginMoodlePassword").value;
 
-  if (email === "" || password === "" || instituteLink === "") {
+  if (username === "" || password === "" || instituteLink === "") {
     document.getElementById("error").classList.remove("hidden");
     document.getElementById("error").innerHTML = "Please fill out all fields";
     return;
@@ -139,7 +141,8 @@ async function moodleLogin() {
   submitBtn.innerHTML = "Loading...";
 
   const response = await fetch(
-    "https://coral-llama-coat.cyclic.app/api/auth/moodleLogin",
+    // "https://coral-llama-coat.cyclic.app/api/auth/moodleLogin",
+    "http://localhost:8000/api/auth/moodleLogin",
     {
       method: "POST",
       headers: {
@@ -147,14 +150,15 @@ async function moodleLogin() {
         captcha: localStorage.getItem("token")
       },
       body: JSON.stringify({
-        email,
+        username,
         password,
-        instituteLink
+        instituteLink,
+        token: localStorage.getItem("token")
       })
     }
   );
   const data = await response.json();
-  console.log(data);
+  // console.log(data);
   submitBtn.innerHTML = "Login";
   if (data.success === false) {
     document.getElementById("error").classList.remove("hidden");
