@@ -28,7 +28,7 @@ async function login() {
   submitBtn.innerHTML = "Loading...";
 
   const response = await fetch(
-    // "https://coral-llama-coat.cyclic.app/api/auth/login",
+    // "http://localhost:8000/api/auth/login",
     "http://localhost:8000/api/auth/login",
     {
       method: "POST",
@@ -80,7 +80,7 @@ async function signup() {
   submitBtn.innerHTML = "Loading...";
 
   const response = await fetch(
-    // "https://coral-llama-coat.cyclic.app/api/auth/sign-up",
+    // "http://localhost:8000/api/auth/sign-up",
     "http://localhost:8000/api/auth/sign-up",
     {
       method: "POST",
@@ -141,7 +141,7 @@ async function moodleLogin() {
   submitBtn.innerHTML = "Loading...";
 
   const response = await fetch(
-    // "https://coral-llama-coat.cyclic.app/api/auth/moodleLogin",
+    // "http://localhost:8000/api/auth/moodleLogin",
     "http://localhost:8000/api/auth/moodleLogin",
     {
       method: "POST",
@@ -165,12 +165,12 @@ async function moodleLogin() {
     document.getElementById("error").innerHTML = data.msg;
     return;
   }
-
+  localStorage.setItem("userid", data.userId);
   window.location = "/moodle.html";
 }
 
 async function checkLogin() {
-  const response = await fetch("https://coral-llama-coat.cyclic.app/api/auth/checkLogin", {
+  const response = await fetch("http://localhost:8000/api/auth/checkLogin", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -179,17 +179,16 @@ async function checkLogin() {
     body: JSON.stringify({
       token: localStorage.getItem("token")
     })
-  })
+  });
   const data = await response.json();
   console.log(data);
   if (data.success === true) {
     if (data.login === "moodle") {
       window.location = "/moodleLogin.html";
     } else {
-      window.location = "/index.html"
+      window.location = "/index.html";
     }
   }
-
 }
 
 function changeState(state) {

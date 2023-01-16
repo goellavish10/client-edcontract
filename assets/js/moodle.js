@@ -1,8 +1,8 @@
 const courseList = [];
 sessionStorage.setItem("courseList", JSON.stringify(courseList));
 function addNewCourse(el) {
-  const courseName = el.id;
-  console.log(courseName);
+  //   const courseName = el.id;
+  //   console.log(courseName);
 
   const courseObj = {
     courseName: el.innerHTML,
@@ -12,7 +12,7 @@ function addNewCourse(el) {
   const courseList = JSON.parse(sessionStorage.getItem("courseList"));
 
   const isPresent = courseList.find((element) => {
-    return element.courseID === el.id ? true : false;
+    return element.courseId === el.dataset.courseid ? true : false;
   });
 
   if (isPresent) {
@@ -39,7 +39,7 @@ function addNewCourse(el) {
 
 function renderNewCourse(courseObj, length) {
   const html = `
-    <div class="inline-flex items-stretch rounded-md border bg-white" id="${courseObj.courseID}__">
+    <div class="inline-flex items-stretch rounded-md border bg-white" id="${courseObj.courseId}__">
     <p
       class="rounded-l-md px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-700"
     >
@@ -50,8 +50,8 @@ function renderNewCourse(courseObj, length) {
       <button
         type="button"
         class="inline-flex h-full items-center justify-center rounded-r-md border-l border-gray-100 px-2 text-gray-600 hover:bg-gray-50 hover:text-gray-700"
-        onclick="deleteCourse('${courseObj.courseID}')"
-        id="${courseObj.courseID} + "_"
+        onclick="deleteCourse('${courseObj.courseId}')"
+        id="${courseObj.courseId} + "_"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +90,7 @@ function deleteCourse(courseId) {
   const courseList = JSON.parse(sessionStorage.getItem("courseList"));
 
   const updatedCourseList = courseList.filter((element) => {
-    return element.courseID !== courseId ? true : false;
+    return element.courseId !== courseId ? true : false;
   });
 
   sessionStorage.setItem("courseList", JSON.stringify(updatedCourseList));
@@ -124,29 +124,6 @@ async function checkAuth() {
   return;
 }
 
-async function submitAccessToken() {
-  const accessToken = document.getElementById("accessToken").value;
-
-  const response = await fetch(
-    "http://localhost:8000/api/registration/canvas-token",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token"),
-        pagecode: "PG001_AB"
-      },
-      body: JSON.stringify({ accessToken })
-    }
-  );
-
-  const data = await response.json();
-
-  console.log(data);
-
-  renderCourses(data);
-}
-
 async function getCourses() {
   try {
     const token = localStorage.getItem("token");
@@ -177,6 +154,7 @@ async function renderCourses(dataArr) {
   console.log("EXECUTION STARTS");
   courseListElement.innerHTML = "";
   dataArr.forEach((element, index) => {
+    console.log("rendering");
     let html = `
     <li>
     <a
@@ -184,8 +162,8 @@ async function renderCourses(dataArr) {
       onclick="addNewCourse(this)"
       id="course${index}"
       class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-      data-courseid="${element.id}"
-      >${element.name}</a
+      data-courseid="${element._id}"
+      >${element.courseName}</a
     >
   </li>
     `;
@@ -201,30 +179,27 @@ async function createAccount(element) {
     return;
   }
 
-  const instituteEmail = document.getElementById("instituteEmail");
+  //   const instituteEmail = document.getElementById("instituteEmail");
   const courses = courseList;
-
-  if (instituteEmail.value === "") {
-    alert("Please enter your institute email");
-    return;
-  }
-
   const dataObj = {
-    instituteEmail: instituteEmail.value,
+    // instituteEmail: instituteEmail.value,
     courses
   };
 
   element.innerHTML = "Loading...";
 
-  const response = await fetch("http://localhost:8000/api/registration/page1", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: localStorage.getItem("token"),
-      pagecode: "PG001_AB"
-    },
-    body: JSON.stringify(dataObj)
-  });
+  const response = await fetch(
+    "http://localhost:8000/api/registration/moodle/moodle-submission",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+        pagecode: "PG001_AB"
+      },
+      body: JSON.stringify(dataObj)
+    }
+  );
 
   const data = await response.json();
   element.innerHTML = "Create Account";

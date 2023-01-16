@@ -310,17 +310,14 @@ window.onload = function () {
 async function checkAuth() {
   // make a get request to localhost 8000 /api/auth/check/page1 to check if the useer is authorized
   // if not authorized redirect to home page
-  const response = await fetch(
-    "https://coral-llama-coat.cyclic.app/api/auth/check/page2",
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token")
-      },
-      credentials: "include"
-    }
-  );
+  const response = await fetch("http://localhost:8000/api/auth/check/page2", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    credentials: "include"
+  });
   const data = await response.json();
   if (data.success === false && data.redirect === true) {
     window.location = `/${data.msg}.html`;
@@ -356,18 +353,15 @@ async function submitData(el) {
     currentOccupation
   };
 
-  const response = await fetch(
-    "https://coral-llama-coat.cyclic.app/api/registration/page2",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token"),
-        pagecode: "PG002_BA"
-      },
-      body: JSON.stringify(dataObj)
-    }
-  );
+  const response = await fetch("http://localhost:8000/api/registration/page2", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("token"),
+      pagecode: "PG002_BA"
+    },
+    body: JSON.stringify(dataObj)
+  });
   const data = await response.json();
 
   if (data.success === false) {

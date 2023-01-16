@@ -13,19 +13,16 @@ async function login() {
   submitBtn.innerHTML = "Loading...";
 
   console.log(email, password);
-  const response = await fetch(
-    "https://coral-llama-coat.cyclic.app/api/auth/login",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email,
-        password
-      })
-    }
-  );
+  const response = await fetch("http://localhost:8000/api/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      email,
+      password
+    })
+  });
   const data = await response.json();
   submitBtn.innerHTML = "Login";
   if (data.success === false) {
