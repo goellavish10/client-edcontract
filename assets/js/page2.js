@@ -370,7 +370,7 @@ async function submitData(el) {
   }
 
   if (data.success === true) {
-    window.location = `/${data.redirect}.html`;
+    window.location = `${data.redirect}`;
   }
 
   return;
